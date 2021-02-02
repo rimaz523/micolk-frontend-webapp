@@ -4,25 +4,24 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- develop
+    - develop
 
 pool:
-  vmImage: 'ubuntu-latest'
+    vmImage: 'ubuntu-latest'
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '14.15.4'
-  displayName: 'Install Node.js'
+    - task: NodeTool@0
+      inputs:
+          versionSpec: '14.15.4'
+      displayName: 'Install Node.js'
 
-- script: 'npm install --global yarn'
-  displayName: 'Install Yarn'
+    - script: 'npm install --global yarn'
+      displayName: 'Install Yarn'
 
-- script: |
-    yarn install
-    yarn build
-  displayName: 'npm install and build'
+    - script: |
+          yarn install
+          yarn build
+      displayName: 'yarn install and build'
 
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: drop'
-  condition: succeeded()
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: drop'
