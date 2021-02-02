@@ -23,5 +23,23 @@ steps:
           yarn build
       displayName: 'yarn install and build'
 
+    - task: CopyFiles@2
+      inputs:
+          sourceFolder: '$(buildOutputFolder)'
+          contents: '**/*'
+          targetFolder: '$(Build.ArtifactStagingDirectory)'
+          cleanTargetFolder: true
+
+    - task: ArchiveFiles@2
+      inputs:
+          rootFolderOrFile: $(Build.ArtifactStagingDirectory)
+          archiveType: 'zip'
+          archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+          includeRootFolder: false
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+          pathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: drop'
