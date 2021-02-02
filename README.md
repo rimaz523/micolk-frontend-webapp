@@ -1,3 +1,5 @@
+[![Build Status](https://dev.azure.com/rimazmohommed523/MicoLK/_apis/build/status/rimaz523.micolk-frontend-webapp?branchName=develop)](https://dev.azure.com/rimazmohommed523/MicoLK/_build/latest?definitionId=10&branchName=develop)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
