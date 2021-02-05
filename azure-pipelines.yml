@@ -28,6 +28,7 @@ stages:
                       yarn install
                       yarn build
                   displayName: 'yarn install and build'
+                  
                 - task: CopyFiles@2
                   inputs:
                       sourceFolder: 'build'
@@ -37,18 +38,17 @@ stages:
 
                 - task: ArchiveFiles@2
                   inputs:
-                      rootFolderOrFile: $(Build.ArtifactStagingDirectory)
+                      rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
                       archiveType: 'zip'
                       archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
                       includeRootFolder: false
-
-                - task: PublishBuildArtifacts@1
-                  inputs:
-                      pathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+                      replaceExistingArchive: true
 
                 - task: PublishBuildArtifacts@1
                   displayName: 'Publish Artifact: drop'
-
+                  inputs:
+                      pathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+                  
     - stage: 'Deploy'
       displayName: 'Deploy the react front end web application'
       dependsOn: Build
@@ -67,4 +67,5 @@ stages:
                               inputs:
                                   azureSubscription: 'uami-devops'
                                   appName: 'micolk-frontend-dev'
-                                  package: '$(Pipeline.Workspace)/drop/*.zip'
+                                  appType: 'webApp'
+                                  package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
