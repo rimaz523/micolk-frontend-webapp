@@ -4,7 +4,11 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-    - '*'
+    branches:
+        include:
+            - master
+            - develop
+            - releases/*
 
 stages:
     - stage: 'Build'
@@ -28,7 +32,7 @@ stages:
                       yarn install
                       yarn build
                   displayName: 'yarn install and build'
-                  
+
                 - task: CopyFiles@2
                   inputs:
                       sourceFolder: 'build'
@@ -48,10 +52,11 @@ stages:
                   displayName: 'Publish Artifact: drop'
                   inputs:
                       pathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-                  
+
     - stage: 'Deploy'
       displayName: 'Deploy the react front end web application'
       dependsOn: Build
+      condition: and (succeeded(), eq(variables['Build.SourceBranchName'], 'develop'))
       jobs:
           - deployment: Deploy
             pool: 'MyAgentPool'
