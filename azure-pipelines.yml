@@ -53,6 +53,11 @@ stages:
                   inputs:
                       pathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
 
+                - task: PublishBuildArtifacts@1
+                  displayName: 'Publish Artifact: drop'
+                  inputs:
+                      pathtoPublish: 'infrastructure/azuredeploy.json'
+
     - stage: 'Deploy'
       displayName: 'Deploy the react front end web application'
       dependsOn: Build
