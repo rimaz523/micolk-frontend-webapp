@@ -4,11 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-    branches:
-        include:
-            - master
-            - develop
-            - releases/*
+    - '*'
 
 stages:
     - stage: 'Build'
@@ -56,7 +52,7 @@ stages:
                 - task: PublishBuildArtifacts@1
                   displayName: 'Publish Artifact: drop'
                   inputs:
-                      pathtoPublish: 'infrastructure/azuredeploy.json'
+                      pathtoPublish: 'infrastructure/*'
 
     - stage: 'Deploy'
       displayName: 'Deploy the react front end web application'
@@ -72,10 +68,19 @@ stages:
                         steps:
                             - download: current
                               artifact: drop
+
+                            - task: AzurePowerShell@5
+                              inputs:
+                                  azureSubscription: 'uami-devops'
+                                  ScriptType: 'FilePath'
+                                  ScriptPath: '$(Pipeline.Workspace)/drop/Deploy-AzTemplate.ps1'
+                                  ScriptArguments: -Location 'australiaeast' -ResourceGroupName 'micolk-dev-template-rg' -ArtifactStagingDirectory '$(Pipeline.Workspace)/drop'
+                                  azurePowerShellVersion: 'LatestVersion'
+
                             - task: AzureWebApp@1
                               displayName: 'Azure App Service Deploy: react website'
                               inputs:
                                   azureSubscription: 'uami-devops'
-                                  appName: 'micolk-frontend-dev'
+                                  appName: 'micolk-frontend-react-dev'
                                   appType: 'webApp'
                                   package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
