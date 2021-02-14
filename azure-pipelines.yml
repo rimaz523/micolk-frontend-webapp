@@ -52,7 +52,7 @@ stages:
                 - task: PublishBuildArtifacts@1
                   displayName: 'Publish Artifact: drop'
                   inputs:
-                      pathtoPublish: 'infrastructure/*'
+                      pathtoPublish: 'infrastructure'
 
     - stage: 'Deploy'
       displayName: 'Deploy the react front end web application'
