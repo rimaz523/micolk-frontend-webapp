@@ -4,7 +4,7 @@
   "parameters": {
     "webAppName": {
       "type": "string",
-      "defaultValue": "[concat('webApp-', uniqueString(resourceGroup().id))]",
+      "defaultValue": "micolk-frontend-react-dev",
       "minLength": 5,
       "metadata": {
         "description": "Web app name."
