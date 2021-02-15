@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "webAppName": {
-            "value": "micolk-frontend-react-dev"
+            "value": "micolk-frontend-dev"
         },
         "sku": {
             "value": "B1"

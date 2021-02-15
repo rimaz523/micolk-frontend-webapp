@@ -4,7 +4,11 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-    - '*'
+    branches:
+        include:
+            - master
+            - develop
+            - releases/*
 
 stages:
     - stage: 'Build'
@@ -57,6 +61,7 @@ stages:
     - stage: 'Deploy'
       displayName: 'Deploy the react front end web application'
       dependsOn: Build
+      condition: and (succeeded(), eq(variables['Build.SourceBranchName'], 'develop'))
       jobs:
           - deployment: Deploy
             pool: 'MyAgentPool'
@@ -74,7 +79,7 @@ stages:
                                 azureResourceManagerConnection: 'uami-devops'
                                 subscriptionId: '2205b54a-8f46-4b5c-ac29-c9874e3342ba'
                                 action: 'Create Or Update Resource Group'
-                                resourceGroupName: 'micolk-dev-template-rg'
+                                resourceGroupName: 'micolk-dev-rg'
                                 location: 'australiiaeast'
                                 templateLocation: 'Linked artifact'
                                 csmFile: '$(Pipeline.Workspace)/drop/azuredeploy.json'
@@ -86,6 +91,6 @@ stages:
                               displayName: 'Azure App Service Deploy: react website'
                               inputs:
                                   azureSubscription: 'uami-devops'
-                                  appName: 'micolk-frontend-react-dev'
+                                  appName: 'micolk-frontend-dev'
                                   appType: 'webApp'
                                   package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'

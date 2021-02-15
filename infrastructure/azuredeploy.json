@@ -4,7 +4,7 @@
   "parameters": {
     "webAppName": {
       "type": "string",
-      "defaultValue": "micolk-frontend-react-dev",
+      "defaultValue": "micolk-frontend-dev",
       "minLength": 5,
       "metadata": {
         "description": "Web app name."
