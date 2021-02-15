@@ -68,6 +68,24 @@ stages:
                             - download: current
                               artifact: drop
 
+                            - task: AzureFileCopy@4
+                              inputs:
+                                SourcePath: '$(Pipeline.Workspace)/drop/azuredeploy.json'
+                                azureSubscription: 'uami-devops'
+                                Destination: 'AzureBlob'
+                                storage: 'storagemicolk'
+                                ContainerName: 'arm-templates'
+                              name: AzureFileCopy
+
+                            - task: AzureFileCopy@4
+                              inputs:
+                                SourcePath: '$(Pipeline.Workspace)/drop/azuredeploy.parameters.json'
+                                azureSubscription: 'uami-devops'
+                                Destination: 'AzureBlob'
+                                storage: 'storagemicolk'
+                                ContainerName: 'arm-templates'
+                              name: AzureFileCopy
+
                             - task: AzureResourceManagerTemplateDeployment@3
                               inputs:
                                 deploymentScope: 'Resource Group'
@@ -76,9 +94,9 @@ stages:
                                 action: 'Create Or Update Resource Group'
                                 resourceGroupName: 'micolk-dev-template-rg'
                                 location: 'australiiaeast'
-                                templateLocation: 'Linked artifact'
-                                csmFileLink: '$(Pipeline.Workspace)/drop/azuredeploy.json'
-                                csmParametersFileLink: '$(Pipeline.Workspace)/drop/azuredeploy.parameters.json'
+                                templateLocation: 'URL of the file'
+                                csmFileLink: '$(AzureFileCopy.StorageContainerUri)azuredeploy.json$(AzureFileCopy.StorageContainerSasToken)'
+                                csmParametersFileLink: '$(AzureFileCopy.StorageContainerUri)azuredeploy.parameters.json$(AzureFileCopy.StorageContainerSasToken)'
                                 deploymentMode: 'Incremental'
                                 deploymentName: 'deploy1'
 
