@@ -53,6 +53,11 @@ stages:
                   inputs:
                       pathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
 
+                - task: PublishBuildArtifacts@1
+                  displayName: 'Publish Artifact: drop'
+                  inputs:
+                      pathtoPublish: 'infrastructure'
+
     - stage: 'Deploy'
       displayName: 'Deploy the react front end web application'
       dependsOn: Build
@@ -67,6 +72,21 @@ stages:
                         steps:
                             - download: current
                               artifact: drop
+
+                            - task: AzureResourceManagerTemplateDeployment@3
+                              inputs:
+                                deploymentScope: 'Resource Group'
+                                azureResourceManagerConnection: 'uami-devops'
+                                subscriptionId: '2205b54a-8f46-4b5c-ac29-c9874e3342ba'
+                                action: 'Create Or Update Resource Group'
+                                resourceGroupName: 'micolk-dev-rg'
+                                location: 'australiiaeast'
+                                templateLocation: 'Linked artifact'
+                                csmFile: '$(Pipeline.Workspace)/drop/azuredeploy.json'
+                                csmParametersFile: '$(Pipeline.Workspace)/drop/azuredeploy.parameters.json'
+                                deploymentMode: 'Incremental'
+                                deploymentName: 'deploy1'
+
                             - task: AzureWebApp@1
                               displayName: 'Azure App Service Deploy: react website'
                               inputs:
