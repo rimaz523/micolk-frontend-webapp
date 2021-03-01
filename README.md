@@ -1,4 +1,4 @@
-[![Build Status](https://dev.azure.com/rimazmohommed523/MicoLK/_apis/build/status/rimaz523.micolk-frontend-webapp?branchName=develop)](https://dev.azure.com/rimazmohommed523/MicoLK/_build/latest?definitionId=10&branchName=develop)
+https://dev.azure.com/rimazmohommed523/MicoLK/_apis/build/status/rimaz523.micolk-frontend-webapp?branchName=develop
 
 # Getting Started with Create React App
 
