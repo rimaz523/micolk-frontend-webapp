@@ -10,6 +10,9 @@ trigger:
             - develop
             - releases/*
 
+variables:
+- group: DevDeploymentVarGroup
+
 stages:
     - stage: 'Build'
       displayName: 'Build the front end react web application'
@@ -17,12 +20,12 @@ stages:
           - job: 'Build'
             displayName: 'Build job'
             pool:
-                vmImage: 'ubuntu-latest'
+                vmImage: '$(buildVmImage)'
 
             steps:
                 - task: NodeTool@0
                   inputs:
-                      versionSpec: '14.15.4'
+                      versionSpec: '$(nodeVersion)'
                   displayName: 'Install Node.js'
 
                 - script: 'npm install --global yarn'
@@ -76,11 +79,11 @@ stages:
                             - task: AzureResourceManagerTemplateDeployment@3
                               inputs:
                                 deploymentScope: 'Resource Group'
-                                azureResourceManagerConnection: 'uami-devops'
-                                subscriptionId: '2205b54a-8f46-4b5c-ac29-c9874e3342ba'
+                                azureResourceManagerConnection: '$(managedIdentityName)'
+                                subscriptionId: '$(subscriptionId)'
                                 action: 'Create Or Update Resource Group'
-                                resourceGroupName: 'micolk-dev-rg'
-                                location: 'southeastasia'
+                                resourceGroupName: '$(resourceGroupName)'
+                                location: '$(resourceGroupLocation)'
                                 templateLocation: 'Linked artifact'
                                 csmFile: '$(Pipeline.Workspace)/drop/azuredeploy.json'
                                 csmParametersFile: '$(Pipeline.Workspace)/drop/azuredeploy.parameters.json'
@@ -90,7 +93,7 @@ stages:
                             - task: AzureWebApp@1
                               displayName: 'Azure App Service Deploy: react website'
                               inputs:
-                                  azureSubscription: 'uami-devops'
-                                  appName: 'micolk-frontend-dev'
+                                  azureSubscription: '$(managedIdentityName)'
+                                  appName: '$(appName)'
                                   appType: 'webApp'
                                   package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
