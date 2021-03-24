@@ -6,11 +6,11 @@ This is the frontend of a one-stop online marketplace site created with react js
 
 ## Technologies & Tools used in the front-end single page web application include :
 
--   ReactJS 17.0.1
--   Yarn 1.22.10
--   Node 14.15.4 LTS
--   Material UI 4.11.3
--   Storybook 6.1.17
+-   ReactJS v17.0.1
+-   Yarn v1.22.10
+-   Node v14.15.4 LTS
+-   Material UI v4.11.3
+-   Storybook v6.1.17
 
 ## Installation Instructions
 
