@@ -9,7 +9,7 @@ This is the frontend of a one-stop online marketplace site created with react js
 -   ReactJS 17.0.1
 -   Yarn 1.22.10
 -   Node 14.15.4 LTS
--   Material UI
+-   Material UI 4.11.3
 
 ## Installation Instructions
 
