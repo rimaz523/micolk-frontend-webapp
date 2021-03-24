@@ -95,6 +95,6 @@ stages:
                               displayName: 'Azure App Service Deploy: react website'
                               inputs:
                                   azureSubscription: '$(managedIdentityName)'
-                                  appName: '$(appName)'
+                                  appName: '$(appName)-$(frontendSuffix)'
                                   appType: 'webApp'
                                   package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
