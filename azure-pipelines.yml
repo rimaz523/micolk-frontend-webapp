@@ -87,7 +87,7 @@ stages:
                                 templateLocation: 'Linked artifact'
                                 csmFile: '$(Pipeline.Workspace)/drop/azuredeploy.json'
                                 csmParametersFile: '$(Pipeline.Workspace)/drop/azuredeploy.parameters.json'
-                                overrideParameters: -webAppName $(appName) -sku $(appSku)
+                                overrideParameters: -webAppDomain $(appName) -webAppSuffix $(frontendSuffix) -sku $(appSku)
                                 deploymentMode: 'Incremental'
                                 deploymentName: 'deploy1'
 
