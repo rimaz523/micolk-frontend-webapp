@@ -12,10 +12,17 @@
     },
     "webAppSuffix": {
       "type": "string",
-      "defaultValue": "frontend-dev",
+      "defaultValue": "frontend",
       "minLength": 5,
       "metadata": {
-        "description": "Web app name."
+        "description": "Web app type."
+      }
+    },
+    "environment": {
+      "type": "string",
+      "defaultValue": "dev",
+      "metadata": {
+        "description": "environment."
       }
     },
     "location": {
@@ -47,8 +54,8 @@
     }
   },
   "variables": {
-    "webAppName": "[concat(parameters('webAppDomain'), '-', parameters('webAppSuffix'))]",
-    "appServicePlanPortalName": "[concat('AppServicePlan-', variables('webAppName'))]",
+    "webAppName": "[concat(parameters('webAppDomain'), '-', parameters('webAppSuffix'), '-', parameters('environment'))]",
+    "appServicePlanPortalName": "[concat('AppServicePlan-', parameters('webAppDomain'), '-', parameters('environment'))]",
     "configReference": {
       ".net": {
         "comments": ".Net app. No additional configuration needed."

@@ -87,7 +87,7 @@ stages:
                                 templateLocation: 'Linked artifact'
                                 csmFile: '$(Pipeline.Workspace)/drop/azuredeploy.json'
                                 csmParametersFile: '$(Pipeline.Workspace)/drop/azuredeploy.parameters.json'
-                                overrideParameters: -webAppDomain $(appName) -webAppSuffix $(frontendSuffix) -sku $(appSku)
+                                overrideParameters: -webAppDomain $(appName) -webAppSuffix $(frontendSuffix) -environment $(environment) -sku $(appSku)
                                 deploymentMode: 'Incremental'
                                 deploymentName: 'deploy1'
 
@@ -95,6 +95,6 @@ stages:
                               displayName: 'Azure App Service Deploy: react website'
                               inputs:
                                   azureSubscription: '$(managedIdentityName)'
-                                  appName: '$(appName)-$(frontendSuffix)'
+                                  appName: '$(appName)-$(frontendSuffix)-$(environment)'
                                   appType: 'webApp'
                                   package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
