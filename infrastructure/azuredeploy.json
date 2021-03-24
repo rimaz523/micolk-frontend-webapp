@@ -12,7 +12,7 @@
     },
     "webAppSuffix": {
       "type": "string",
-      "defaultValue": "-frontend-dev",
+      "defaultValue": "frontend-dev",
       "minLength": 5,
       "metadata": {
         "description": "Web app name."
@@ -47,7 +47,7 @@
     }
   },
   "variables": {
-    "webAppName": "[concat(parameters('webAppDomain'), parameters('webAppSuffix'))]",
+    "webAppName": "[concat(parameters('webAppDomain'), '-', parameters('webAppSuffix'))]",
     "appServicePlanPortalName": "[concat('AppServicePlan-', variables('webAppName'))]",
     "configReference": {
       ".net": {

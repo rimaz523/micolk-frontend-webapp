@@ -6,7 +6,7 @@
             "value": "micolk"
         },
         "webAppSuffix": {
-            "value": "-frontend-dev"
+            "value": "frontend-dev"
         },
         "sku": {
             "value": "B1"
