@@ -10,6 +10,7 @@ This is the frontend of a one-stop online marketplace site created with react js
 -   Yarn 1.22.10
 -   Node 14.15.4 LTS
 -   Material UI 4.11.3
+-   Storybook 6.1.17
 
 ## Installation Instructions
 
