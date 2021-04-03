@@ -11,7 +11,7 @@ trigger:
             - releases/*
 
 variables:
-- group: DevDeploymentVarGroup
+    - group: DevDeploymentVarGroup
 
 stages:
     - stage: 'Build'
@@ -67,7 +67,7 @@ stages:
       condition: and (succeeded(), eq(variables['Build.SourceBranchName'], 'develop'))
       jobs:
           - deployment: Deploy
-            pool: 'MyAgentPool'
+            pool: '$(deployAgentPool)'
             environment: Development
             strategy:
                 runOnce:
@@ -78,18 +78,18 @@ stages:
 
                             - task: AzureResourceManagerTemplateDeployment@3
                               inputs:
-                                deploymentScope: 'Resource Group'
-                                azureResourceManagerConnection: '$(managedIdentityName)'
-                                subscriptionId: '$(subscriptionId)'
-                                action: 'Create Or Update Resource Group'
-                                resourceGroupName: '$(resourceGroupName)'
-                                location: '$(resourceGroupLocation)'
-                                templateLocation: 'Linked artifact'
-                                csmFile: '$(Pipeline.Workspace)/drop/azuredeploy.json'
-                                csmParametersFile: '$(Pipeline.Workspace)/drop/azuredeploy.parameters.json'
-                                overrideParameters: -webAppDomain $(appName) -webAppSuffix $(frontendSuffix) -environment $(environment) -sku $(appSku)
-                                deploymentMode: 'Incremental'
-                                deploymentName: 'deploy1'
+                                  deploymentScope: 'Resource Group'
+                                  azureResourceManagerConnection: '$(managedIdentityName)'
+                                  subscriptionId: '$(subscriptionId)'
+                                  action: 'Create Or Update Resource Group'
+                                  resourceGroupName: '$(resourceGroupName)'
+                                  location: '$(resourceGroupLocation)'
+                                  templateLocation: 'Linked artifact'
+                                  csmFile: '$(Pipeline.Workspace)/drop/azuredeploy.json'
+                                  csmParametersFile: '$(Pipeline.Workspace)/drop/azuredeploy.parameters.json'
+                                  overrideParameters: -webAppDomain $(appName) -webAppSuffix $(frontendSuffix) -environment $(environment) -sku $(appSku)
+                                  deploymentMode: 'Incremental'
+                                  deploymentName: 'deploy1'
 
                             - task: AzureWebApp@1
                               displayName: 'Azure App Service Deploy: react website'
