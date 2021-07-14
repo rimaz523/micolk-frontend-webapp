@@ -99,3 +99,4 @@ stages:
                                   appName: '$(appName)-$(frontendSuffix)-$(environment)'
                                   appType: 'webApp'
                                   package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
+                                  deploymentMethod: 'zipDeploy'
