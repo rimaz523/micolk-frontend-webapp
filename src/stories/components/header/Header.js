@@ -6,7 +6,7 @@ import './header.css'
 
 export const Header = ({ user, onLogin, onLogout, onCreateAccount }) => (
     <header>
-        <div className="wrapper">
+        <div className="mc-header__wrapper">
             <Branding />
             <div>
                 {user ? (
