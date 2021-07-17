@@ -1,16 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import { Button } from './Button'
+import { Button } from '../button/Button'
+import { Branding } from '../branding/Branding'
 import './header.css'
 
 export const Header = ({ user, onLogin, onLogout, onCreateAccount }) => (
     <header>
         <div className="wrapper">
-            <div>
-                <img src={`favicon-32x32.png`} />
-                <h1>MicoLK</h1>
-            </div>
+            <Branding />
             <div>
                 {user ? (
                     <Button size="small" onClick={onLogout} label="Log out" />
