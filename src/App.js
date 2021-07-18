@@ -7,7 +7,7 @@ import { ThemeProvider } from '@material-ui/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
 function App() {
-    const prefersDarkMode = true
+    const prefersDarkMode = false
 
     const theme = React.useMemo(
         () =>
