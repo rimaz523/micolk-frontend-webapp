@@ -3,7 +3,7 @@ import React from 'react'
 import { Branding } from './Branding'
 
 export default {
-    title: 'Example/Branding',
+    title: 'Components/Branding',
     component: Branding,
 }
 

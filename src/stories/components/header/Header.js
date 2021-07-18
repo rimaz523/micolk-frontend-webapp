@@ -4,6 +4,9 @@ import { makeStyles } from '@material-ui/core'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Button from '@material-ui/core/Button'
+import { IconButton } from '@material-ui/core'
+import Brightness3Icon from '@material-ui/icons/Brightness3'
+import Brightness7Icon from '@material-ui/icons/Brightness7'
 import { Branding } from '../branding/Branding'
 
 export const Header = ({ user, onLogin, onLogout, onCreateAccount }) => {
@@ -31,6 +34,12 @@ export const Header = ({ user, onLogin, onLogout, onCreateAccount }) => {
                             </Button>
                         </>
                     )}
+                    <IconButton edge="end" color="inherit" aria-label="mode">
+                        <Brightness3Icon />
+                    </IconButton>
+                    <IconButton edge="end" color="inherit" aria-label="mode">
+                        <Brightness7Icon />
+                    </IconButton>
                 </Toolbar>
             </AppBar>
         </div>

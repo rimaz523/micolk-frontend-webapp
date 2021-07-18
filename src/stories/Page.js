@@ -1,19 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Header } from './components/header/Header'
-import { Footer } from './components/footer/Footer'
+// import { Header } from './components/header/Header'
+// import { Footer } from './components/footer/Footer'
 import './page.css'
 
-export const Page = ({ user, onLogin, onLogout, onCreateAccount }) => (
+export const Page = () => (
     <>
         <article>
-            <Header
-                user={user}
-                onLogin={onLogin}
-                onLogout={onLogout}
-                onCreateAccount={onCreateAccount}
-            />
-
             <section>
                 <h2>Welcome to Mico.lk</h2>
                 <p>
@@ -85,7 +78,6 @@ export const Page = ({ user, onLogin, onLogout, onCreateAccount }) => (
                 </div>
             </section>
         </article>
-        <Footer />
     </>
 )
 Page.propTypes = {
