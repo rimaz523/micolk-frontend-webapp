@@ -8,8 +8,18 @@ import { IconButton } from '@material-ui/core'
 import Brightness3Icon from '@material-ui/icons/Brightness3'
 import Brightness7Icon from '@material-ui/icons/Brightness7'
 import { Branding } from '../branding/Branding'
+import { connect } from 'react-redux'
+import * as themeActions from '../../../redux/actions/themeActions'
 
-export const Header = ({ user, onLogin, onLogout, onCreateAccount }) => {
+const Header = ({ user, ...props }) => {
+    const setDarkMode = () => {
+        props.dispatch(themeActions.setDarkMode({ isDark: true }))
+    }
+
+    const setLightMode = () => {
+        props.dispatch(themeActions.setLightMode({ isDark: false }))
+    }
+
     const classes = useStyles()
 
     return (
@@ -21,25 +31,32 @@ export const Header = ({ user, onLogin, onLogout, onCreateAccount }) => {
                     </div>
 
                     {user ? (
-                        <Button color="inherit" onClick={onLogout}>
-                            Logout
-                        </Button>
+                        <Button color="inherit">Logout</Button>
                     ) : (
                         <>
-                            <Button color="inherit" onClick={onLogin}>
-                                Login
-                            </Button>
-                            <Button color="inherit" onClick={onCreateAccount}>
-                                Sign up
-                            </Button>
+                            <Button color="inherit">Login</Button>
+                            <Button color="inherit">Sign up</Button>
                         </>
                     )}
-                    <IconButton edge="end" color="inherit" aria-label="mode">
-                        <Brightness3Icon />
-                    </IconButton>
-                    <IconButton edge="end" color="inherit" aria-label="mode">
-                        <Brightness7Icon />
-                    </IconButton>
+                    {props.theme.isDark ? (
+                        <IconButton
+                            edge="end"
+                            color="inherit"
+                            aria-label="mode"
+                            onClick={setLightMode}
+                        >
+                            <Brightness7Icon />
+                        </IconButton>
+                    ) : (
+                        <IconButton
+                            edge="end"
+                            color="inherit"
+                            aria-label="mode"
+                            onClick={setDarkMode}
+                        >
+                            <Brightness3Icon />
+                        </IconButton>
+                    )}
                 </Toolbar>
             </AppBar>
         </div>
@@ -48,13 +65,15 @@ export const Header = ({ user, onLogin, onLogout, onCreateAccount }) => {
 
 Header.propTypes = {
     user: PropTypes.shape({}),
-    onLogin: PropTypes.func.isRequired,
-    onLogout: PropTypes.func.isRequired,
-    onCreateAccount: PropTypes.func.isRequired,
+    dispatch: PropTypes.func.isRequired,
+    theme: PropTypes.object.isRequired,
 }
 
 Header.defaultProps = {
     user: null,
+    theme: {
+        isDark: false,
+    },
 }
 
 const useStyles = makeStyles(() => ({
@@ -65,3 +84,11 @@ const useStyles = makeStyles(() => ({
         flexGrow: 1,
     },
 }))
+
+function mapStateToProps(state) {
+    return {
+        theme: state.theme,
+    }
+}
+
+export default connect(mapStateToProps)(Header)
