@@ -1,31 +1,41 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button } from '../button/Button'
+import { makeStyles } from '@material-ui/core'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Button from '@material-ui/core/Button'
 import { Branding } from '../branding/Branding'
-import './header.css'
 
-export const Header = ({ user, onLogin, onLogout, onCreateAccount }) => (
-    <header>
-        <div className="mc-header__wrapper">
-            <Branding />
-            <div>
-                {user ? (
-                    <Button size="small" onClick={onLogout} label="Log out" />
-                ) : (
-                    <>
-                        <Button size="small" onClick={onLogin} label="Log in" />
-                        <Button
-                            primary
-                            size="small"
-                            onClick={onCreateAccount}
-                            label="Sign up"
-                        />
-                    </>
-                )}
-            </div>
+export const Header = ({ user, onLogin, onLogout, onCreateAccount }) => {
+    const classes = useStyles()
+
+    return (
+        <div className={classes.root}>
+            <AppBar position="static" color="default">
+                <Toolbar>
+                    <div className={classes.title}>
+                        <Branding />
+                    </div>
+
+                    {user ? (
+                        <Button color="inherit" onClick={onLogout}>
+                            Logout
+                        </Button>
+                    ) : (
+                        <>
+                            <Button color="inherit" onClick={onLogin}>
+                                Login
+                            </Button>
+                            <Button color="inherit" onClick={onCreateAccount}>
+                                Sign up
+                            </Button>
+                        </>
+                    )}
+                </Toolbar>
+            </AppBar>
         </div>
-    </header>
-)
+    )
+}
 
 Header.propTypes = {
     user: PropTypes.shape({}),
@@ -37,3 +47,12 @@ Header.propTypes = {
 Header.defaultProps = {
     user: null,
 }
+
+const useStyles = makeStyles(() => ({
+    root: {
+        flexGrow: 1,
+    },
+    title: {
+        flexGrow: 1,
+    },
+}))
