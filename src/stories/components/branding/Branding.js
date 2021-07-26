@@ -4,7 +4,7 @@ import './branding.css'
 
 export const Branding = ({ name }) => (
     <div>
-        <img src={`favicon-32x32.png`} />
+        <img src={`logo.png`} height="40" width="40" />
         <h1 className="mc-branding__h1">{name}</h1>
     </div>
 )
