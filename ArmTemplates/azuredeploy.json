@@ -1,103 +1,106 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "webAppDomain": {
-      "type": "string",
-      "defaultValue": "micolk",
-      "minLength": 5,
-      "metadata": {
-        "description": "Web app name."
-      }
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "webAppDomain": {
+            "type": "string",
+            "defaultValue": "micolk",
+            "minLength": 5,
+            "metadata": {
+                "description": "Web app name."
+            }
+        },
+        "webAppSuffix": {
+            "type": "string",
+            "defaultValue": "frontend",
+            "minLength": 5,
+            "metadata": {
+                "description": "Web app type."
+            }
+        },
+        "environment": {
+            "type": "string",
+            "defaultValue": "dev",
+            "metadata": {
+                "description": "environment."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        },
+        "appServiceOs": {
+            "type": "string",
+            "defaultValue": "linux",
+            "metadata": {
+                "description": "The operating system of the app service instance."
+            }
+        },
+        "sku": {
+            "type": "string",
+            "defaultValue": "B1",
+            "metadata": {
+                "description": "The SKU of App Service Plan."
+            }
+        },
+        "language": {
+            "type": "string",
+            "defaultValue": "node",
+            "allowedValues": [".net", "php", "node", "html"],
+            "metadata": {
+                "description": "The language stack of the app."
+            }
+        }
     },
-    "webAppSuffix": {
-      "type": "string",
-      "defaultValue": "frontend",
-      "minLength": 5,
-      "metadata": {
-        "description": "Web app type."
-      }
+    "variables": {
+        "webAppName": "[concat(parameters('webAppDomain'), '-', parameters('webAppSuffix'), '-', parameters('environment'))]",
+        "appServicePlanPortalName": "[concat('AppServicePlan-', parameters('webAppDomain'), '-', parameters('environment'))]",
+        "configReference": {
+            ".net": {
+                "comments": ".Net app. No additional configuration needed."
+            },
+            "html": {
+                "comments": "HTML app. No additional configuration needed."
+            },
+            "php": {
+                "phpVersion": "7.4"
+            },
+            "node": {
+                "appSettings": [
+                    {
+                        "name": "WEBSITE_NODE_DEFAULT_VERSION",
+                        "value": "14.15.4"
+                    }
+                ]
+            }
+        }
     },
-    "environment": {
-      "type": "string",
-      "defaultValue": "dev",
-      "metadata": {
-        "description": "environment."
-      }
-    },
-    "location": {
-      "type": "string",
-      "defaultValue": "[resourceGroup().location]",
-      "metadata": {
-        "description": "Location for all resources."
-      }
-    },
-    "sku": {
-      "type": "string",
-      "defaultValue": "B1",
-      "metadata": {
-        "description": "The SKU of App Service Plan."
-      }
-    },
-    "language": {
-      "type": "string",
-      "defaultValue": "node",
-      "allowedValues": [
-        ".net",
-        "php",
-        "node",
-        "html"
-      ],
-      "metadata": {
-        "description": "The language stack of the app."
-      }
-    }
-  },
-  "variables": {
-    "webAppName": "[concat(parameters('webAppDomain'), '-', parameters('webAppSuffix'), '-', parameters('environment'))]",
-    "appServicePlanPortalName": "[concat('AppServicePlan-', parameters('webAppDomain'), '-', parameters('environment'))]",
-    "configReference": {
-      ".net": {
-        "comments": ".Net app. No additional configuration needed."
-      },
-      "html": {
-        "comments": "HTML app. No additional configuration needed."
-      },
-      "php": {
-        "phpVersion": "7.4"
-      },
-      "node": {
-        "appSettings": [
-          {
-            "name": "WEBSITE_NODE_DEFAULT_VERSION",
-            "value": "14.15.4"
-          }
-        ]
-      }
-    }
-  },
-  "resources": [
-    {
-      "type": "Microsoft.Web/serverfarms",
-      "apiVersion": "2020-06-01",
-      "name": "[variables('appServicePlanPortalName')]",
-      "location": "[parameters('location')]",
-      "sku": {
-        "name": "[parameters('sku')]"
-      }
-    },
-    {
-      "type": "Microsoft.Web/sites",
-      "apiVersion": "2020-06-01",
-      "name": "[variables('webAppName')]",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]"
-      ],
-      "properties": {
-        "siteConfig": "[variables('configReference')[parameters('language')]]",
-        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]"
-      }
-    }
-  ]
+    "resources": [
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('appServicePlanPortalName')]",
+            "location": "[parameters('location')]",
+            "kind": "[parameters('appServiceOs')]",
+            "sku": {
+                "name": "[parameters('sku')]"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('webAppName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]"
+            ],
+            "properties": {
+                "siteConfig": "[variables('configReference')[parameters('language')]]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]"
+            }
+        }
+    ]
 }

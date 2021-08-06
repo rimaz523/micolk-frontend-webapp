@@ -16,6 +16,9 @@
         },
         "language": {
             "value": "node"
+        },
+        "appServiceOs": {
+            "value": "linux"
         }
     }
 }
