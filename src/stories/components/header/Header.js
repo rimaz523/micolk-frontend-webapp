@@ -7,17 +7,18 @@ import Button from '@material-ui/core/Button'
 import { IconButton } from '@material-ui/core'
 import Brightness3Icon from '@material-ui/icons/Brightness3'
 import Brightness7Icon from '@material-ui/icons/Brightness7'
+import MenuIcon from '@material-ui/icons/Menu'
 import { Branding } from '../branding/Branding'
 import { connect } from 'react-redux'
 import * as themeActions from '../../../redux/actions/themeActions'
 
 const Header = ({ user, ...props }) => {
     const setDarkMode = () => {
-        props.dispatch(themeActions.setDarkMode({ isDark: true }))
+        props.dispatch(themeActions.setTheme({ isDark: true }))
     }
 
     const setLightMode = () => {
-        props.dispatch(themeActions.setLightMode({ isDark: false }))
+        props.dispatch(themeActions.setTheme({ isDark: false }))
     }
 
     const classes = useStyles()
@@ -26,6 +27,15 @@ const Header = ({ user, ...props }) => {
         <div className={classes.root}>
             <AppBar position="static" color="default">
                 <Toolbar>
+                    <IconButton
+                        size="medium"
+                        edge="start"
+                        color="inherit"
+                        aria-label="open drawer"
+                        sx={{ mr: 2 }}
+                    >
+                        <MenuIcon />
+                    </IconButton>
                     <div className={classes.title}>
                         <Branding />
                     </div>
