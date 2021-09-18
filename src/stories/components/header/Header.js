@@ -7,17 +7,18 @@ import Button from '@material-ui/core/Button'
 import { IconButton } from '@material-ui/core'
 import Brightness3Icon from '@material-ui/icons/Brightness3'
 import Brightness7Icon from '@material-ui/icons/Brightness7'
-import { Branding } from '../branding/Branding'
+import MenuIcon from '@material-ui/icons/Menu'
+import { Branding } from '../common-ui/branding/Branding'
 import { connect } from 'react-redux'
-import * as themeActions from '../../../redux/actions/themeActions'
+import { setTheme } from '../../../redux/actions/themeActions'
 
-const Header = ({ user, ...props }) => {
+const Header = ({ user, setTheme, ...props }) => {
     const setDarkMode = () => {
-        props.dispatch(themeActions.setDarkMode({ isDark: true }))
+        setTheme({ isDark: true })
     }
 
     const setLightMode = () => {
-        props.dispatch(themeActions.setLightMode({ isDark: false }))
+        setTheme({ isDark: false })
     }
 
     const classes = useStyles()
@@ -26,6 +27,13 @@ const Header = ({ user, ...props }) => {
         <div className={classes.root}>
             <AppBar position="static" color="default">
                 <Toolbar>
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                        aria-label="open drawer"
+                    >
+                        <MenuIcon />
+                    </IconButton>
                     <div className={classes.title}>
                         <Branding />
                     </div>
@@ -65,7 +73,7 @@ const Header = ({ user, ...props }) => {
 
 Header.propTypes = {
     user: PropTypes.shape({}),
-    dispatch: PropTypes.func.isRequired,
+    setTheme: PropTypes.func.isRequired,
     theme: PropTypes.object.isRequired,
 }
 
@@ -91,4 +99,8 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(Header)
+const mapDispatchToProps = {
+    setTheme,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)
