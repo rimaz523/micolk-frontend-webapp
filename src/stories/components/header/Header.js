@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { makeStyles } from '@material-ui/core'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Button from '@material-ui/core/Button'
-import { IconButton } from '@material-ui/core'
-import Brightness3Icon from '@material-ui/icons/Brightness3'
-import Brightness7Icon from '@material-ui/icons/Brightness7'
-import MenuIcon from '@material-ui/icons/Menu'
+import makeStyles from '@mui/styles/makeStyles'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import Button from '@mui/material/Button'
+import { IconButton } from '@mui/material'
+import Brightness3Icon from '@mui/icons-material/Brightness3'
+import Brightness7Icon from '@mui/icons-material/Brightness7'
+import MenuIcon from '@mui/icons-material/Menu'
 import { Branding } from '../common-ui/branding/Branding'
 import { connect } from 'react-redux'
 import { setTheme } from '../../../redux/actions/themeActions'
@@ -31,6 +31,7 @@ const Header = ({ user, setTheme, ...props }) => {
                         edge="start"
                         color="inherit"
                         aria-label="open drawer"
+                        size="large"
                     >
                         <MenuIcon />
                     </IconButton>
@@ -52,6 +53,7 @@ const Header = ({ user, setTheme, ...props }) => {
                             color="inherit"
                             aria-label="mode"
                             onClick={setLightMode}
+                            size="large"
                         >
                             <Brightness7Icon />
                         </IconButton>
@@ -61,6 +63,7 @@ const Header = ({ user, setTheme, ...props }) => {
                             color="inherit"
                             aria-label="mode"
                             onClick={setDarkMode}
+                            size="large"
                         >
                             <Brightness3Icon />
                         </IconButton>

@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import './App.css'
-import { createMuiTheme } from '@material-ui/core'
-import { ThemeProvider } from '@material-ui/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { StyledEngineProvider } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
 import { Route, Switch } from 'react-router-dom'
 import Header from './stories/components/header/Header'
 import { Footer } from './stories/components/footer/Footer'
@@ -14,25 +14,27 @@ import { HomePage } from './stories/pages/home/HomePage'
 function App({ ...props }) {
     const theme = React.useMemo(
         () =>
-            createMuiTheme({
+            createTheme({
                 palette: {
-                    type: props.theme.isDark ? 'dark' : 'light',
+                    mode: props.theme.isDark ? 'dark' : 'light',
                 },
             }),
         [props.theme.isDark]
     )
 
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Header />
-            <Switch>
-                <Route exact path="/" component={HomePage} />
-                <Route component={PageNotFound} />
-                <Route />
-            </Switch>
-            <Footer />
-        </ThemeProvider>
+        <StyledEngineProvider injectFirst>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <Header />
+                <Switch>
+                    <Route exact path="/" component={HomePage} />
+                    <Route component={PageNotFound} />
+                    <Route />
+                </Switch>
+                <Footer />
+            </ThemeProvider>
+        </StyledEngineProvider>
     )
 }
 
