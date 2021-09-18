@@ -8,7 +8,7 @@ import { IconButton } from '@material-ui/core'
 import Brightness3Icon from '@material-ui/icons/Brightness3'
 import Brightness7Icon from '@material-ui/icons/Brightness7'
 import MenuIcon from '@material-ui/icons/Menu'
-import { Branding } from '../branding/Branding'
+import { Branding } from '../common-ui/branding/Branding'
 import { connect } from 'react-redux'
 import { setTheme } from '../../../redux/actions/themeActions'
 
