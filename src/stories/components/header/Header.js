@@ -10,15 +10,15 @@ import Brightness7Icon from '@material-ui/icons/Brightness7'
 import MenuIcon from '@material-ui/icons/Menu'
 import { Branding } from '../branding/Branding'
 import { connect } from 'react-redux'
-import * as themeActions from '../../../redux/actions/themeActions'
+import { setTheme } from '../../../redux/actions/themeActions'
 
-const Header = ({ user, ...props }) => {
+const Header = ({ user, setTheme, ...props }) => {
     const setDarkMode = () => {
-        props.dispatch(themeActions.setTheme({ isDark: true }))
+        setTheme({ isDark: true })
     }
 
     const setLightMode = () => {
-        props.dispatch(themeActions.setTheme({ isDark: false }))
+        setTheme({ isDark: false })
     }
 
     const classes = useStyles()
@@ -73,7 +73,7 @@ const Header = ({ user, ...props }) => {
 
 Header.propTypes = {
     user: PropTypes.shape({}),
-    dispatch: PropTypes.func.isRequired,
+    setTheme: PropTypes.func.isRequired,
     theme: PropTypes.object.isRequired,
 }
 
@@ -99,4 +99,8 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(Header)
+const mapDispatchToProps = {
+    setTheme,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)
