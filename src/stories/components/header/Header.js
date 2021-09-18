@@ -28,11 +28,9 @@ const Header = ({ user, ...props }) => {
             <AppBar position="static" color="default">
                 <Toolbar>
                     <IconButton
-                        size="medium"
                         edge="start"
                         color="inherit"
                         aria-label="open drawer"
-                        sx={{ mr: 2 }}
                     >
                         <MenuIcon />
                     </IconButton>
