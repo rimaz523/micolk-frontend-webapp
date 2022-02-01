@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import makeStyles from '@mui/styles/makeStyles'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
-import Button from '@mui/material/Button'
 import { IconButton } from '@mui/material'
 import Brightness3Icon from '@mui/icons-material/Brightness3'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
@@ -12,7 +11,7 @@ import { Branding } from '../common-ui/branding/Branding'
 import { connect } from 'react-redux'
 import { setTheme } from '../../../redux/actions/themeActions'
 
-const Header = ({ user, setTheme, ...props }) => {
+const Header = ({ setTheme, ...props }) => {
     const setDarkMode = () => {
         setTheme({ isDark: true })
     }
@@ -38,15 +37,6 @@ const Header = ({ user, setTheme, ...props }) => {
                     <div className={classes.title}>
                         <Branding />
                     </div>
-
-                    {user ? (
-                        <Button color="inherit">Logout</Button>
-                    ) : (
-                        <>
-                            <Button color="inherit">Login</Button>
-                            <Button color="inherit">Sign up</Button>
-                        </>
-                    )}
                     {props.theme.isDark ? (
                         <IconButton
                             edge="end"
